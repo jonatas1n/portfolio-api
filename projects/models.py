@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import String
+from sqlalchemy import String, JSON, Text
 from database.base import Base
 
 
@@ -8,6 +8,7 @@ class Projects(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(String(30), unique=True)
-    technologies: Mapped[list[str]] = mapped_column(String(32), nullable=True)
-    description: Mapped[str] = mapped_column(String(2048), nullable=True)
-    images: Mapped[list[str]] = mapped_column(String(2048), nullable=True)
+    technologies: Mapped[list[str]] = mapped_column(JSON, nullable=True)
+    description: Mapped[str] = mapped_column(Text, nullable=True)
+    images: Mapped[str] = mapped_column(String(255), nullable=True)
+    link: Mapped[str] = mapped_column(String(128), nullable=True)
