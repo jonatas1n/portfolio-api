@@ -7,13 +7,14 @@ import os
 UPLOAD_FOLDER = "uploads"  # Pasta onde as imagens serão armazenadas
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Criar a pasta se não existir
 
+
 class ProjectAdmin(ModelView, model=Projects):
     column_list = [
         Projects.id,
         Projects.title,
         Projects.technologies,
         Projects.description,
-        Projects.images
+        Projects.images,
     ]
 
     column_searchable_list = [Projects.title]
@@ -43,6 +44,4 @@ class ProjectAdmin(ModelView, model=Projects):
             return f'<img src="/{model.images}" width="100"/>'
         return "Sem imagem"
 
-    column_formatters = {
-        "images": _format_image
-    }
+    column_formatters = {"images": _format_image}

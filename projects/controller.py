@@ -3,12 +3,14 @@ from .models import Projects
 from database.db import get_db
 from fastapi import Depends
 
+
 def list_projects(db: Session = Depends(get_db), technologies: list[str] = []):
     if technologies:
-        return db.query(Projects).filter(
-            Projects.technologies.overlap(technologies)
-        ).all()
+        return (
+            db.query(Projects).filter(Projects.technologies.overlap(technologies)).all()
+        )
     return db.query(Projects).all()
+
 
 def list_projects_technologies(db: Session = Depends(get_db)):
     result = db.query(Projects.technologies).all()

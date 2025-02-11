@@ -22,8 +22,10 @@ with engine.connect() as conn:
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+
 def init_db():
     Base.metadata.create_all(engine)
+
 
 def get_db():
     db = SessionLocal()
@@ -31,5 +33,6 @@ def get_db():
         yield db
     finally:
         db.close()
+
 
 init_db()

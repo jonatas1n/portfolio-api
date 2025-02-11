@@ -5,9 +5,11 @@ from database.db import get_db
 
 router = APIRouter(prefix="/projects", tags=["projects"])
 
+
 @router.get("/")
 def list(db: Session = Depends(get_db), technologies: list[str] = []):
     return list_projects(db, technologies)
+
 
 @router.get("/technologies")
 def technologies(db: Session = Depends(get_db)):

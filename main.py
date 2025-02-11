@@ -21,9 +21,11 @@ init_all_admins(app)
 
 app.mount("/files", StaticFiles(directory="uploads"), name="uploads")
 
+
 @app.get("/")
 def root():
     return {"message": "It's working"}
+
 
 app.include_router(skills_router)
 app.include_router(projects_router)
