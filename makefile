@@ -3,3 +3,6 @@ install:
 
 lint:
 	black .
+
+run:
+	fastapi dev main.py
