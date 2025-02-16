@@ -7,7 +7,7 @@ class Experiences(Base):
     __tablename__ = "experiences"
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    position: Mapped[str] = mapped_column(String(30), unique=True)
+    position: Mapped[str] = mapped_column(String(30), unique=False)
     start_date: Mapped[Date] = mapped_column(Date, nullable=False)
     end_date: Mapped[Date] = mapped_column(Date, nullable=True)
     company_name: Mapped[str] = mapped_column(String(64))
