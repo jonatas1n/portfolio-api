@@ -4,6 +4,9 @@ import json
 
 
 class ExperienceAdmin(ModelView, model=Experiences):
+    edit_template = "custom_edit.html"
+    create_template = "custom_create.html"
+
     column_list = [
         Experiences.id,
         Experiences.position,

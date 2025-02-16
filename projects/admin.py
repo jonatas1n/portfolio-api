@@ -4,11 +4,14 @@ from .models import Projects
 import shutil
 import os
 
-UPLOAD_FOLDER = "uploads"  # Pasta onde as imagens serão armazenadas
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Criar a pasta se não existir
+UPLOAD_FOLDER = "uploads"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
 class ProjectAdmin(ModelView, model=Projects):
+    edit_template = "custom_edit.html"
+    create_template = "custom_create.html"
+
     column_list = [
         Projects.id,
         Projects.title,
