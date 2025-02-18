@@ -3,3 +3,5 @@ black
 sqladmin
 mysql-connector-python
 sqlalchemy
+uvicorn
+mangum
