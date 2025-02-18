@@ -2,6 +2,6 @@ fastapi[standard]
 black
 sqladmin
 mysql-connector-python
-sqlalchemy
+sqlalchemy==2.0
 uvicorn
 mangum
