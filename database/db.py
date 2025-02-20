@@ -2,6 +2,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
 from .base import Base
+import mysql.connector
 from experiences.models import *
 from projects.models import *
 from skills.models import *
@@ -12,9 +13,14 @@ DATABASE_USER = os.getenv("DATABASE_USER", "root")
 DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD", "password")
 DATABASE_NAME = os.getenv("DATABASE_NAME", "portfolio")
 
-DATABASE_URL = f"mysql+mysqlconnector://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}/{DATABASE_NAME}?ssl-mode=REQUIRED"
+DATABASE_URL = f"mysql+mysqlconnector://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}/{DATABASE_NAME}"
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={
+        "ssl_disabled": False
+    }
+)
 
 with engine.connect() as conn:
     conn.execute(text("CREATE DATABASE IF NOT EXISTS portfolio"))
