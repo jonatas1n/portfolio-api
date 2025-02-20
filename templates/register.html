@@ -1,28 +1,76 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registro</title>
-</head>
-<body>
-    <h2>Cadastro de Usuário</h2>
-    
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
+    <style>
+      body {
+        background-color: #efefef;
+        font-family: sans-serif;
+      }
 
-    <form method="post" action="/auth/register">
+      main {
+        height: 100dvh;
+        display: grid;
+        justify-items: center;
+        align-content: center;
+      }
+
+      form {
+        display: grid;
+        padding: 1.5rem 3rem;
+        border-radius: 1rem;
+        background-color: white;
+        gap: .5rem;
+        box-shadow: 0 0 1rem rgba(0, 0, 0, .1);
+      }
+
+      form button {
+        font-weight: bold;
+        padding: .5rem;
+        border: none;
+        border-radius: .5rem;
+        background-color: #000000;
+        color: white;
+        cursor: pointer;
+      }
+
+      form input {
+        padding: .5rem;
+        border: 1px solid #000000;
+        border-radius: .5rem;
+      }
+
+      #error {
+        color: white;
+        font-weight: bold;
+        background-color: #AC0000;
+        padding: 1rem;
+        border-radius: .5rem;
+      } 
+
+    </style>
+  </head>
+  <body>
+    <main>
+      {% if error %}
+        <p id="error">{{ error }}</p>
+      {% endif %}
+      <form method="post" action="/auth/register">
+        <h2>Cadastro de Usuário</h2>
+
         <label for="name">Nome:</label>
-        <input type="text" id="name" name="name" required><br>
+        <input type="text" id="name" name="name" required /><br />
 
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br>
+        <input type="email" id="email" name="email" required /><br />
 
         <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required><br>
+        <input type="password" id="password" name="password" required /><br />
 
         <button type="submit">Registrar</button>
-    </form>
-</body>
+      </form>
+    </main>
+  </body>
 </html>
