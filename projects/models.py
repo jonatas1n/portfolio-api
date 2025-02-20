@@ -10,6 +10,5 @@ class Projects(Base):
     title: Mapped[str] = mapped_column(String(30), unique=True)
     technologies: Mapped[list[str]] = mapped_column(JSON, nullable=True)
     description: Mapped[str] = mapped_column(Text, nullable=True)
-    description_en: Mapped[str] = mapped_column(Text, nullable=True)
     images: Mapped[str] = mapped_column(String(255), nullable=True)
     link: Mapped[str] = mapped_column(String(128), nullable=True)

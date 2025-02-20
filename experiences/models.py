@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import String, Date, JSON
+from sqlalchemy import String, Date, JSON, Text
 from database.base import Base
 
 
@@ -11,5 +11,5 @@ class Experiences(Base):
     start_date: Mapped[Date] = mapped_column(Date, nullable=False)
     end_date: Mapped[Date] = mapped_column(Date, nullable=True)
     company_name: Mapped[str] = mapped_column(String(64))
-    description: Mapped[str] = mapped_column(String(2048), nullable=True)
+    description: Mapped[str] = mapped_column(Text, nullable=True)
     technologies: Mapped[list[str]] = mapped_column(JSON, nullable=True)
