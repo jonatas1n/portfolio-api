@@ -12,7 +12,7 @@ DATABASE_USER = os.getenv("DATABASE_USER", "root")
 DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD", "password")
 DATABASE_NAME = os.getenv("DATABASE_NAME", "portfolio")
 
-DATABASE_URL = f"mysql+mysqlconnector://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}/{DATABASE_NAME}"
+DATABASE_URL = f"mysql+mysqlconnector://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}/{DATABASE_NAME}?ssl-mode=REQUIRED"
 
 engine = create_engine(DATABASE_URL)
 
