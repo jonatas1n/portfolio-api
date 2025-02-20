@@ -6,3 +6,5 @@ sqlalchemy==2.0
 uvicorn
 mangum
 pymysql
+itsdangerous
+passlib

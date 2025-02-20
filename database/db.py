@@ -6,6 +6,7 @@ from .base import Base
 from experiences.models import *
 from projects.models import *
 from skills.models import *
+from users.models import *
 import os
 
 DATABASE_HOST = os.getenv("DATABASE_HOST", "")
@@ -26,12 +27,13 @@ engine = create_engine(
     connect_args={"ssl": ssl_context}
 )
 
+SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
+
 with engine.connect() as conn:
     conn.execute(text(f"CREATE DATABASE IF NOT EXISTS {DATABASE_NAME}"))
     conn.commit()
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
 
 def init_db():
     Base.metadata.create_all(engine)
