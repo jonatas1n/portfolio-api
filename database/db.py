@@ -12,17 +12,13 @@ DATABASE_USER = os.getenv("DATABASE_USER", "")
 DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD", "")
 DATABASE_NAME = os.getenv("DATABASE_NAME", "")
 DATABASE_PORT = os.getenv("DATABASE_PORT", "16604")
+CA_CERTIFICATE = os.getenv("CA_CERTIFICATE")
 
 DATABASE_URL = f"mysql+pymysql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_NAME}"
 
 engine = create_engine(
     DATABASE_URL,
-    connect_args={
-        "ssl": {
-            "ca": "ca.pem",
-            "mode": "REQUIRED"
-        }
-    }
+    connect_args={"ssl": {"ca": CA_CERTIFICATE}}
 )
 
 with engine.connect() as conn:
