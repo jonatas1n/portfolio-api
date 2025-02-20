@@ -5,4 +5,10 @@ from fastapi import Depends
 
 
 def list_skills(db: Session = Depends(get_db)):
-    return db.query(Skills).all()
+    skills = db.query(Skills).all()
+    grouped_skills = {}
+    for skill in skills:
+        if not skill.skill_type:
+            continue
+        grouped_skills.setdefault(skill.skill_type, []).append(skill)
+    return grouped_skills
