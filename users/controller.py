@@ -19,7 +19,6 @@ def create_user(name: str, email: str, password: str, db: Session = Depends(get_
         name=name,
         email=email,
         password_hash=hashed_password,
-        is_admin=True
     )
 
     db.add(new_user)
