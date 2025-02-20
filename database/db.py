@@ -1,12 +1,10 @@
 from sqlalchemy import create_engine, text
+from sqlalchemy.engine import reflection
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import SQLAlchemyError
 import ssl
 
 from .base import Base
-from experiences.models import *
-from projects.models import *
-from skills.models import *
-from users.models import *
 import os
 
 DATABASE_HOST = os.getenv("DATABASE_HOST", "")
@@ -36,6 +34,36 @@ with engine.connect() as conn:
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 def init_db():
+    import experiences.models
+    import projects.models
+    import skills.models
+    import users.models
+
+    inspector = reflection.Inspector.from_engine(engine)
+
+    with engine.connect() as conn:
+        trans = conn.begin()
+        try:
+            for table_name in Base.metadata.tables:
+                columns_in_db = {col['name'] for col in inspector.get_columns(table_name)}
+                columns_in_model = {col.name for col in Base.metadata.tables[table_name].columns}
+                missing_columns = columns_in_model - columns_in_db
+
+                if missing_columns:
+                    print(f"Table '{table_name}' is missing columns: {missing_columns}")
+                    
+                    for column in missing_columns:
+                        column_obj = Base.metadata.tables[table_name].columns[column]
+                        column_type = column_obj.type.compile(engine.dialect)  # Compilar tipo corretamente
+
+                        alter_stmt = text(f"ALTER TABLE {table_name} ADD COLUMN {column} {column_type}")
+                        conn.execute(alter_stmt)
+
+            trans.commit()
+        except SQLAlchemyError as e:
+            trans.rollback()
+            print(f"Error updating database schema: {e}")
+
     Base.metadata.create_all(engine)
 
 
