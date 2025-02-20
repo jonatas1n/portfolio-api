@@ -24,6 +24,14 @@
         background-color: white;
         gap: .5rem;
         box-shadow: 0 0 1rem rgba(0, 0, 0, .1);
+        animation: fade-up .75s ease forwards 1;
+      }
+
+      form > * {
+        opacity: 0;
+        transition: .5s;
+        animation: fade-up .5s ease forwards 1;
+        animation-delay: .125s;
       }
 
       form button {
@@ -48,7 +56,30 @@
         background-color: #AC0000;
         padding: 1rem;
         border-radius: .5rem;
-      } 
+        animation: fade-down .5s ease forwards 1;
+      }
+
+      @keyframes fade-up {
+        from {
+          opacity: 0;
+          transform: translateY(1rem);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fade-down {
+        from {
+          opacity: 0;
+          transform: translateY(-1rem);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
     </style>
   </head>
@@ -58,7 +89,7 @@
         <p id="error">{{ error }}</p>
       {% endif %}
       <form method="post" action="/auth/register">
-        <h2>Cadastro de Usuário</h2>
+        <h2>Cadastro</h2>
 
         <label for="name">Nome:</label>
         <input type="text" id="name" name="name" required /><br />
