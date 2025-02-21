@@ -18,6 +18,7 @@ admin = None
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+
 class AdminAuth(AuthenticationBackend):
     async def login(self, request: Request) -> bool:
         form = await request.form()
@@ -42,7 +43,9 @@ class AdminAuth(AuthenticationBackend):
     def get_user_by_email(self, session: Session, email: str):
         return session.query(Users).filter(Users.email == email).first()
 
+
 authentication_backend = AdminAuth(secret_key="admin")
+
 
 def init_all_admins(app: FastAPI):
     global admin

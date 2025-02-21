@@ -20,10 +20,7 @@ DATABASE_URL = f"mysql+pymysql://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_H
 ssl_context = ssl.create_default_context()
 ssl_context.load_verify_locations(cadata=CA_CERTIFICATE)
 
-engine = create_engine(
-    DATABASE_URL,
-    connect_args={"ssl": ssl_context}
-)
+engine = create_engine(DATABASE_URL, connect_args={"ssl": ssl_context})
 
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
@@ -32,6 +29,7 @@ with engine.connect() as conn:
     conn.commit()
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
 
 def init_db():
     import experiences.models
@@ -50,8 +48,12 @@ def init_db():
                     Base.metadata.tables[table_name].create(engine)
                     continue
 
-                columns_in_db = {col['name'] for col in inspector.get_columns(table_name)}
-                columns_in_model = {col.name for col in Base.metadata.tables[table_name].columns}
+                columns_in_db = {
+                    col["name"] for col in inspector.get_columns(table_name)
+                }
+                columns_in_model = {
+                    col.name for col in Base.metadata.tables[table_name].columns
+                }
                 missing_columns = columns_in_model - columns_in_db
                 extra_columns = columns_in_db - columns_in_model
 
@@ -59,17 +61,21 @@ def init_db():
                     print(f"Table '{table_name}' has extra columns: {extra_columns}")
 
                     for column in extra_columns:
-                        alter_stmt = text(f"ALTER TABLE {table_name} DROP COLUMN {column}")
+                        alter_stmt = text(
+                            f"ALTER TABLE {table_name} DROP COLUMN {column}"
+                        )
                         conn.execute(alter_stmt)
 
                 if missing_columns:
                     print(f"Table '{table_name}' is missing columns: {missing_columns}")
-                    
+
                     for column in missing_columns:
                         column_obj = Base.metadata.tables[table_name].columns[column]
                         column_type = column_obj.type.compile(engine.dialect)
 
-                        alter_stmt = text(f"ALTER TABLE {table_name} ADD COLUMN {column} {column_type}")
+                        alter_stmt = text(
+                            f"ALTER TABLE {table_name} ADD COLUMN {column} {column_type}"
+                        )
                         conn.execute(alter_stmt)
 
             trans.commit()

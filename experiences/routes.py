@@ -7,11 +7,15 @@ from database.db import get_db
 
 router = APIRouter(prefix="/experiences", tags=["experiences"])
 
+
 class ExperiencesParams(BaseModel):
     technologies: list[str] = []
 
+
 @router.get("/")
-def list(filter_query: Annotated[(ExperiencesParams, Query())], db: Session = Depends(get_db)):
+def list(
+    filter_query: Annotated[(ExperiencesParams, Query())], db: Session = Depends(get_db)
+):
     return list_experiences(db, filter_query.technologies)
 
 

@@ -25,7 +25,8 @@ def register_user(
             "register.html", {"request": request, "error": str(e)}
         )
 
-    return RedirectResponse(url="/", status_code=303) 
+    return RedirectResponse(url="/", status_code=303)
+
 
 @router.get("/")
 def register_user_form(request: Request):

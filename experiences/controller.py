@@ -6,12 +6,14 @@ from fastapi import Depends
 from datetime import datetime
 import json
 
+
 def convert_date(date: datetime):
     return date.strftime("%m/%Y")
 
+
 def list_experiences(db: Session, technologies: list = None):
     experiences_list = db.query(Experiences).order_by(Experiences.start_date.desc())
-    
+
     if technologies:
         conditions = [
             func.json_contains(Experiences.technologies, func.json_array(tech))
@@ -19,19 +21,19 @@ def list_experiences(db: Session, technologies: list = None):
         ]
 
         experiences_list = experiences_list.filter(or_(*conditions))
-    
+
     experiences_list = experiences_list.all()
-    
+
     for i, experience in enumerate(experiences_list):
         start_date = experience.start_date
         start_date = convert_date(start_date)
-        
+
         end_date = experience.end_date
         end_date = convert_date(end_date) if end_date else "Actually"
-        
+
         experience.start_date = start_date
         experience.end_date = end_date
-        
+
         experiences_list[i] = experience
 
     return experiences_list

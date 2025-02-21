@@ -19,6 +19,7 @@ app.add_middleware(
 
 init_all_admins(app)
 
+
 @app.get("/")
 def root():
     return {"message": "It's working"}
