@@ -10,7 +10,7 @@ def convert_date(date: datetime):
     return date.strftime("%m/%Y")
 
 def list_experiences(db: Session, technologies: list = None):
-    experiences_list = db.query(Experiences)
+    experiences_list = db.query(Experiences).order_by(Experiences.start_date.desc())
     
     if technologies:
         conditions = [
