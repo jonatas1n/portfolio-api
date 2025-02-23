@@ -1,3 +1,4 @@
+import json
 from sqlalchemy.orm import Session
 from .models import Projects
 from database.db import get_db
@@ -5,11 +6,15 @@ from fastapi import Depends
 
 
 def list_projects(db: Session = Depends(get_db), technologies: list[str] = []):
+    projects = db.query(Projects)
     if technologies:
-        return (
-            db.query(Projects).filter(Projects.technologies.overlap(technologies)).all()
-        )
-    return db.query(Projects).all()
+        projects = projects.filter(Projects.technologies.overlap(technologies))
+    
+    projects = projects.all()
+    for project in projects:
+        project.images = json.loads(project.images)
+
+    return projects
 
 
 def list_projects_technologies(db: Session = Depends(get_db)):
