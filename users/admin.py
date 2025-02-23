@@ -5,6 +5,8 @@ from users.models import Users
 
 
 class UserAdmin(ModelView, model=Users):
+    name = "User"
+    name_plural = "Users"
     def is_visible(self, request: Request) -> bool:
         return True
 
