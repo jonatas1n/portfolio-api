@@ -21,6 +21,7 @@ class ProjectAdmin(ModelView, model=Projects):
         Projects.technologies,
         Projects.description,
         Projects.images,
+        Projects.link,
     ]
 
     column_searchable_list = [Projects.title]
