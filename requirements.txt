@@ -8,3 +8,5 @@ mangum
 pymysql
 itsdangerous
 passlib
+wand
+pillow

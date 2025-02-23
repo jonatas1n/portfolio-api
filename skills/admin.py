@@ -3,6 +3,8 @@ from .models import Skills
 
 
 class SkillAdmin(ModelView, model=Skills):
+    name = "Skill"
+    name_plural = "Skills"
     edit_template = "custom_edit.html"
     create_template = "custom_create.html"
 

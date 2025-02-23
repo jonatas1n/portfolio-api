@@ -4,6 +4,8 @@ import json
 
 
 class ExperienceAdmin(ModelView, model=Experiences):
+    name = "Experience"
+    name_plural = "Experiences"
     edit_template = "custom_edit.html"
     create_template = "custom_create.html"
 
