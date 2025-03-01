@@ -46,7 +46,7 @@ class ProjectAdmin(ModelView, model=Projects):
         images = data.pop("images", None)
         if len(images) > 0 and images[0].size > 0:
             processed_images = await self.process_images(images)
-            data["images"] = json.loads(processed_images)
+            data["images"] = json.dumps(processed_images)
         return await super().insert_model(request, data)
 
     async def update_model(self, request: Request, pk: int, data: dict):
