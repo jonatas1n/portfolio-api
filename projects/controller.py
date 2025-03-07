@@ -12,7 +12,7 @@ def list_projects(db: Session = Depends(get_db), technologies: list[str] = []):
     
     projects = projects.all()
     for project in projects:
-        project.images = json.loads(project.images)
+        project.images = json.dumps(project.images)
 
     return projects
 
