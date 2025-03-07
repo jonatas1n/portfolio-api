@@ -1,13 +1,10 @@
-import base64
-from io import BytesIO
-from PIL import Image
 from sqladmin import ModelView
 from starlette.requests import Request
 from starlette.datastructures import UploadFile
-from wtforms import FileField, MultipleFileField
-from wtforms.validators import DataRequired
+from wtforms import MultipleFileField
 from .models import Projects
 import json
+from utils.image import resize_and_convert
 
 
 class ProjectAdmin(ModelView, model=Projects):
@@ -60,21 +57,7 @@ class ProjectAdmin(ModelView, model=Projects):
         processed_images = []
         for image in images:
             if isinstance(image, UploadFile):
-                img_base64 = await self.resize_and_convert(image)
+                img_base64 = await resize_and_convert(image)
                 processed_images.append(img_base64)
 
         return processed_images
-
-    async def resize_and_convert(self, upload_file: UploadFile, fixed_width=200):
-        image_bytes = await upload_file.read()
-        image = Image.open(BytesIO(image_bytes))
-
-        aspect_ratio = image.height / image.width
-        new_height = int(fixed_width * aspect_ratio)
-        resized_image = image.resize((fixed_width, new_height))
-
-        buffered = BytesIO()
-        resized_image.save(buffered, format="PNG")
-        img_base64 = base64.b64encode(buffered.getvalue()).decode("utf-8")
-
-        return f"data:image/png;base64,{img_base64}"
