@@ -11,8 +11,6 @@ def list_projects(db: Session = Depends(get_db), technologies: list[str] = []):
         projects = projects.filter(Projects.technologies.overlap(technologies))
     
     projects = projects.all()
-    for project in projects:
-        project.images = json.dumps(project.images)
 
     return projects
 
