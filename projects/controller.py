@@ -9,7 +9,7 @@ def list_projects(db: Session = Depends(get_db), technologies: list[str] = []):
     projects = db.query(Projects)
     if technologies:
         projects = projects.filter(Projects.technologies.overlap(technologies))
-    
+
     projects = projects.all()
 
     return projects
@@ -18,14 +18,13 @@ def list_projects(db: Session = Depends(get_db), technologies: list[str] = []):
 def list_projects_technologies(db: Session = Depends(get_db)):
     result = db.query(Projects.technologies).all()
 
-    if not result:
-        return []
-
     parsed_technologies = []
 
-    for item in result:
-        item_list = item[0]
-        parsed_technologies += item_list
+    if result:
+        for item in result:
+            item_list = item[0]
+            parsed_technologies += item_list
 
-    parsed_technologies = list(set(parsed_technologies))
+        parsed_technologies = list(set(parsed_technologies))
+
     return parsed_technologies
